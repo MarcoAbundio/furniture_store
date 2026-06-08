@@ -1,6 +1,5 @@
 package com.furniturestore.product.mapper;
 
-import com.furniturestore.product.dto.request.*;
 import com.furniturestore.product.dto.response.*;
 import com.furniturestore.product.model.*;
 import org.mapstruct.*;
