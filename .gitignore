@@ -1,0 +1,13 @@
+.env
+target/
+*.jar
+*.log
+.idea/
+.vscode/
+*.iml
+build/
+.DS_Store
+*.class
+*.war
+*.zip
+*.tar.gz

@@ -1,0 +1,93 @@
+services:
+  eureka-server:
+    build: ./eureka-server
+    container_name: furniture-eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - furniture-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8761/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  auth-service:
+    build: ./auth-service
+    container_name: furniture-auth
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - furniture-network
+
+  product-service:
+    build: ./product-service
+    container_name: furniture-product
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - furniture-network
+
+  employee-service:
+    build: ./employee-service
+    container_name: furniture-employee
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - furniture-network
+
+  delivery-service:
+    build: ./delivery-service
+    container_name: furniture-delivery
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - furniture-network
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: furniture-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      JWT_SECRET: FurnitureStoreSecretKey2024VeryLongAndSecure
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - furniture-network
+
+networks:
+  furniture-network:
+    driver: bridge
