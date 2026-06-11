@@ -3,7 +3,11 @@ package com.furniturestore.product.dto.response;
 import lombok.*;
 import java.time.LocalDateTime;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class StockResponse {
     private Long id;
     private Long productId;

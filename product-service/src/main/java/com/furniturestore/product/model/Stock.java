@@ -4,11 +4,15 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
 @Table(name = "stock", schema = "inventory")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Stock {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false, unique = true)
@@ -19,6 +23,10 @@ public class Stock {
     private Integer minStock;
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
-    @PrePersist @PreUpdate
-    protected void onUpdate() { this.updatedAt = LocalDateTime.now(); }
+
+    @PrePersist
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }
