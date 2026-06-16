@@ -145,7 +145,7 @@ CREATE TABLE logistics.addresses (
     state        VARCHAR(100) NOT NULL,
     zip_code     VARCHAR(10) NOT NULL,
     country      VARCHAR(50) NOT NULL DEFAULT 'México',
-    "references"   TEXT,
+    address_reference   TEXT,
     is_default   BOOLEAN NOT NULL DEFAULT FALSE,
     created_at   TIMESTAMP NOT NULL DEFAULT NOW()
 );
