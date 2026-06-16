@@ -29,7 +29,6 @@ class DeliveryServiceTest {
 
     private Customer customer;
     private Address address;
-    private DeliveryStatus pendingStatus;
     private DeliveryStatus cancelledStatus;
 
     @BeforeEach
@@ -39,7 +38,6 @@ class DeliveryServiceTest {
         address = Address.builder().id(1L).customer(customer).street("Insurgentes")
                 .extNumber("123").neighborhood("Roma").city("CDMX").state("CDMX")
                 .zipCode("06700").country("México").isDefault(true).build();
-        pendingStatus = DeliveryStatus.builder().id(1L).code("PENDING").description("Pendiente").build();
         cancelledStatus = DeliveryStatus.builder().id(5L).code("CANCELLED").description("Cancelado").build();
     }
 

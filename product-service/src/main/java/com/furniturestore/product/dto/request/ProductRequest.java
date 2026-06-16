@@ -1,10 +1,22 @@
 package com.furniturestore.product.dto.request;
 
-import jakarta.validation.constraints.*;
-import lombok.*;
 import java.math.BigDecimal;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ProductRequest {
     @NotBlank(message = "SKU is required")
     @Size(max = 50)
@@ -43,5 +55,5 @@ public class ProductRequest {
     private Integer initialStock;
 
     @Min(0)
-    private Integer minStock = 5;
+    private Integer minStock;
 }
